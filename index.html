@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <title>RockBird</title>
+<meta name="description" content="RockBird: throw rocks at birds, sell the meat or stuff them as trophies, travel the world and battle giant boss birds. Free browser game.">
+<meta property="og:title" content="RockBird"><meta property="og:description" content="Throw rocks at birds, build a trophy collection, travel the world and battle boss birds.">
+<meta name="theme-color" content="#e2572b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='88'%3E%F0%9F%90%A6%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
 <style>
 :root{--paper:#f7efdc;--ink:#2b241c;--accent:#e2572b;--gold:#f2b63a;--green:#3f8f3a;--wood:#7a4f2c}
 *{box-sizing:border-box}
@@ -12,14 +18,14 @@ canvas{display:block;position:fixed;inset:0;cursor:crosshair}
 button{font-family:inherit;cursor:pointer}
 #hud{position:fixed;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;padding:10px;pointer-events:none;gap:8px}
 .box{background:rgba(247,239,220,.94);border:3px solid var(--ink);border-radius:14px;padding:6px 14px;box-shadow:0 4px 0 rgba(0,0,0,.25)}
-#money{font-size:28px;font-weight:900;letter-spacing:.5px;color:#2e6b1f}
+#money{font-family:'Lilita One',inherit;font-size:30px;font-weight:400;letter-spacing:.5px;color:#2e6b1f}
 #income{font-size:13px;font-weight:700;opacity:.8}
 #mid{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:0}
 #clock{font-weight:800;font-size:14px;padding:4px 12px}
-#combo{font-weight:900;font-size:26px;color:#fff;text-shadow:0 3px 0 #b33a12,0 0 10px rgba(0,0,0,.4);transition:transform .1s;min-height:30px}
+#combo{font-family:'Lilita One',inherit;font-weight:400;font-size:28px;color:#fff;text-shadow:0 3px 0 #b33a12,0 0 10px rgba(0,0,0,.4);transition:transform .1s;min-height:30px}
 #bossbar{display:none;width:min(420px,90%);text-align:center}
 #bosssub{font-weight:800;color:#fff;text-shadow:0 2px 0 #000,0 0 6px #000;font-size:12px;margin-top:3px;min-height:15px}
-#bossname{font-weight:900;color:#fff;text-shadow:0 2px 0 #000;font-size:15px;letter-spacing:2px}
+#bossname{font-family:'Lilita One',inherit;font-weight:400 !important;font-weight:900;color:#fff;text-shadow:0 2px 0 #000;font-size:15px;letter-spacing:2px}
 .bar{height:14px;background:#2b241c;border:2px solid #000;border-radius:8px;overflow:hidden}
 .bar i{display:block;height:100%;width:100%;background:linear-gradient(#ff6b4a,#c62828)}
 #btns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;pointer-events:auto;max-width:46vw}
@@ -88,12 +94,19 @@ kbd{font-size:10px;opacity:.55;font-family:inherit}
 h3{margin:14px 0 8px;font-size:16px}
 #start{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:rgba(30,40,60,.55)}
 #start .in{background:var(--paper);border:4px solid var(--ink);border-radius:20px;padding:24px 26px;max-width:min(520px,92vw);text-align:center;box-shadow:0 8px 0 rgba(0,0,0,.3)}
-#start h1{margin:0;font-size:58px;letter-spacing:1px;color:var(--accent);text-shadow:0 4px 0 var(--ink);font-weight:900}
+#start h1{font-family:'Lilita One',inherit;font-weight:400 !important;margin:0;font-size:64px;letter-spacing:1px;color:var(--accent);text-shadow:0 4px 0 var(--ink);font-weight:900}
 #start h1 span{color:#5a7a8a}
 #start ul{text-align:left;font-size:14px;line-height:1.55;padding-left:20px;margin:14px 0}
 #start .go{font-size:22px;padding:12px 30px;border:4px solid var(--ink);border-radius:14px;background:#7cc95a;font-weight:900;box-shadow:0 4px 0 var(--ink)}
 .danger{background:#ffcdc4 !important}
-@media (max-width:640px){#money{font-size:20px}#btns button{padding:5px 7px;font-size:12px}.hb{width:50px;height:50px}.hb .lb{display:none}.hb.gas{width:58px}#combo{font-size:20px}#start h1{font-size:44px}}
+#pause{position:fixed;inset:0;z-index:15;display:none;align-items:center;justify-content:center;background:rgba(20,25,40,.45);pointer-events:auto}
+#pause div{font-family:'Lilita One',inherit;font-size:54px;color:#fff;text-shadow:0 4px 0 #2b241c;text-align:center}
+#pause small{display:block;font-family:inherit;font-size:15px;font-weight:700;text-shadow:none;opacity:.9}
+.ach{display:flex;gap:8px;align-items:center;background:#fff;border:3px solid var(--ink);border-radius:10px;padding:6px 9px;margin-bottom:6px;font-size:12px}
+.ach.off{opacity:.55;background:#f1ece0}
+.ach .ai{font-size:22px}
+.ach b{font-size:13px}
+@media (max-width:640px){#hotbar{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;max-width:98vw;padding-bottom:2px}#botd{max-width:190px;font-size:10px}#botd img{width:26px;height:20px}kbd{display:none}#money{font-size:20px}#btns button{padding:5px 7px;font-size:12px}.hb{width:50px;height:50px}.hb .lb{display:none}.hb.gas{width:58px}#combo{font-size:20px}#start h1{font-size:44px}}
 </style>
 </head>
 <body>
@@ -110,11 +123,14 @@ h3{margin:14px 0 8px;font-size:16px}
     <button data-open="bag" id="bagBtn">🎒 <span id="bagCount">0/8</span> <kbd>B</kbd></button>
     <button data-open="book">🦜 Trophies <kbd>C</kbd></button>
     <button data-open="map">🗺️ Map <kbd>T</kbd></button>
+    <button id="help" title="How to play">❓</button>
+    <button id="pauseBtn" title="Pause (P)">⏸</button>
     <button id="mute" title="Mute (M)">🔊</button>
   </div>
 </div>
 <div id="hotbar"></div>
 <div id="toast"></div>
+<div id="pause"><div>PAUSED<small>Press P or click to keep throwing</small></div></div>
 <div id="panel" class="hidden">
   <header>
     <div class="tabs">
@@ -130,7 +146,7 @@ h3{margin:14px 0 8px;font-size:16px}
 <div id="start"><div class="in">
   <h1>Rock<span>Bird</span></h1>
   <ul>
-    <li><b>Click / hold</b> to throw at birds. <b>1–6</b> switch weapons.</li>
+    <li><b>Click / hold</b> to throw at birds. Switch weapons with the <b>number keys</b> or <b>mouse wheel</b>. <b>P</b> pauses.</li>
     <li>Downed birds land in your <b>bag</b>. <b>Sell the meat</b> for cash, or <b>stuff them</b> as trophies that earn money every second.</li>
     <li>One-hit rock and axe kills are <b style="color:#3a8f3a">Pristine</b> and make the best trophies. Explosives leave birds <b style="color:#e0582f">Blasted</b>, and <b>Q</b> Birdicide makes them <b style="color:#6f9a2a">Toxic</b>, which ruins the meat.</li>
     <li>Open the 🗺️ <b>Map</b> to travel to new places, each with its own birds and weapon shop. Catch the 🌟 <b>Bird of the Day</b> for a daily jackpot.</li>
@@ -285,7 +301,7 @@ const STUFFS=[{n:'Old Newspaper',m:1,c:0},{n:'Cotton Wool',m:1.6,c:500},{n:'Goos
 
 /* ================= state ================= */
 const KEY='rockbird_save_v1';
-const DEF={money:0,earned:0,kills:0,weapons:{rock:true},equipped:'rock',armLv:0,sharpLv:0,scopeLv:0,knife:0,stuffing:0,bagLv:0,shelfLv:0,turrets:0,turretLv:0,gas:3,gasLv:0,feederLv:0,exoticLv:0,luckLv:0,net:false,butcher:false,intern:false,bag:[],shelf:[],book:{},stuffed:{},loc:'meadow',unlocked:{meadow:true},botdLast:'',botdStreak:0,bossKills:0,bossNext:0,bossBeat:{},mythLv:0,clock:20,nextId:1,lastSave:Date.now(),muted:false,bestCombo:0};
+const DEF={money:0,earned:0,kills:0,weapons:{rock:true},equipped:'rock',armLv:0,sharpLv:0,scopeLv:0,knife:0,stuffing:0,bagLv:0,shelfLv:0,turrets:0,turretLv:0,gas:3,gasLv:0,feederLv:0,exoticLv:0,luckLv:0,net:false,butcher:false,intern:false,bag:[],shelf:[],book:{},stuffed:{},loc:'meadow',unlocked:{meadow:true},botdLast:'',botdStreak:0,ach:{},bossKills:0,bossNext:0,bossBeat:{},mythLv:0,clock:20,nextId:1,lastSave:Date.now(),muted:false,bestCombo:0};
 let S=JSON.parse(JSON.stringify(DEF));
 function save(){try{S.lastSave=Date.now();localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d&&typeof d==='object'){S=Object.assign(JSON.parse(JSON.stringify(DEF)),d);return true;}}catch(e){}return false;}
@@ -293,8 +309,8 @@ function load(){try{const d=JSON.parse(localStorage.getItem(KEY)||'null');if(d&&
 const bagCap=()=>8+4*S.bagLv, shelfCap=()=>6+3*S.shelfLv;
 const armMult=()=>Math.pow(.9,S.armLv), dmgMult=()=>1+.35*S.sharpLv;
 const shinyChance=()=>Math.min(.5,.02*(1+.6*S.luckLv));
-function meatVal(it){return SP[it.key].meat*knife(S.knife).m*COND[it.cond].meat*(it.shiny?5:1)*(it.botd?3:1);}
-function stuffBase(it){return SP[it.key].stuff*stuffT(S.stuffing).m*COND[it.cond].stuff*(it.shiny?5:1)*(it.botd?2:1);}
+function meatVal(it){return (VALM[SP[it.key].r]||1)*SP[it.key].meat*knife(S.knife).m*COND[it.cond].meat*(it.shiny?5:1)*(it.botd?3:1);}
+function stuffBase(it){return (VALM[SP[it.key].r]||1)*SP[it.key].stuff*stuffT(S.stuffing).m*COND[it.cond].stuff*(it.shiny?5:1)*(it.botd?2:1);}
 function speciesCount(){return Object.keys(S.stuffed).length;}
 function setBonus(){const n=speciesCount();return (1+.05*n)*(n>=ALLBOOK.length?2:1);}
 function stuffVal(it){return stuffBase(it)*setBonus();}
@@ -384,7 +400,7 @@ function birdIcon(key,shiny,sil){const k=key+(shiny?'s':'')+(sil?'x':'');if(icon
 
 /* ================= particles & popups ================= */
 function feathers(x,y,sp,n){for(let i=0;i<n;i++)parts.push({t:'feather',x,y,vx:rand(-120,120),vy:rand(-160,40),life:rand(1.2,2.2),max:2.2,c:Math.random()<.5?sp.wing:sp.body,s:rand(3,6),rot:rand(0,6),vr:rand(-6,6)});}
-function pop(x,y,text,color,size){pops.push({x,y,text,color:color||'#fff',life:1.3,size:size||18});}
+function pop(x,y,text,color,size,life){if(pops.length>80)pops.shift();pops.push({x,y,text,color:color||'#fff',life:life||1.3,size:size||18});}
 function toast(msg,cls,ms){const d=document.createElement('div');d.className='t '+(cls||'');d.textContent=msg;$('toast').appendChild(d);setTimeout(()=>d.remove(),ms||2600);while($('toast').children.length>4)$('toast').firstChild.remove();}
 function earn(n,x,y,col){if(n<=0)return;S.money+=n;S.earned+=n;if(x!==undefined)pop(x,y,'+$'+fmt(n),col||'#ffe066');}
 
@@ -401,7 +417,7 @@ function botdJackpot(b){const today=dayKey();if(S.botdLast===today)return;S.botd
  const pay=Math.round(500+SP[b.key].meat*knife(S.knife).m*40*(1+.25*(S.botdStreak-1)));earn(pay,b.x,b.y-60,'#fff176');
  toast('🌟 BIRD OF THE DAY! '+SP[b.key].n+' jackpot: $'+fmt(pay)+(S.botdStreak>1?' · 🔥 '+S.botdStreak+'-day streak!':''),'gold',5000);sfx('shiny');sfx('buy');shake=8;
  for(let i=0;i<40;i++)parts.push({t:'dot',x:b.x,y:b.y,vx:rand(-300,300),vy:rand(-300,200),life:1,max:1,s:rand(3,6),c:'hsl('+rand(0,360)+',90%,60%)'});}
-const HPM={Uncommon:1.6,Rare:2.5,Epic:4,Legendary:4};
+const HPM={Uncommon:1.6,Rare:2.5,Epic:4,Legendary:4};const VALM={Uncommon:1.35,Rare:1.8,Epic:2.6,Legendary:2.6};
 function spawnBird(key,o){o=o||{};const sp=SP[key];const dir=o.dir||(Math.random()<.5?1:-1);const s=sp.size*rand(.92,1.1);
  const b={key,sp,dir,s,x:o.x!==undefined?o.x:(dir>0?-70:W+70),y:0,baseY:o.y!==undefined?o.y:rand(70,Math.max(130,GY-220)),hp:Math.ceil(sp.hp*(HPM[sp.r]||1)),maxhp:Math.ceil(sp.hp*(HPM[sp.r]||1)),spd:rand(sp.spd[0],sp.spd[1]),t:Math.random()*10,hits:0,dead:false,shiny:started&&sp.r!=='Boss'&&!sp.minion&&Math.random()<shinyChance(),loot:0,shield:!!sp.iceShield,shieldT:0,blinkT:rand(1.2,2),age:0,flash:0,vx:0,vy:0,rot:0,spin:0,state:'fly',src:'',blasted:false,gassed:false,passes:0,ground:0,pat:o.pat||sp.pat};
  b.y=b.baseY;if(started&&sp.r==='Mythic'&&!o.quiet){toast('🌟 MYTHIC: '+sp.n+'! '+sp.desc,'gold',4500);sfx('shiny');}if(b.shiny)setTimeout(()=>{if(!b.dead){toast('✨ A shiny '+sp.n+' appeared!','gold');sfx('shiny');}},50);birds.push(b);return b;}
@@ -451,7 +467,7 @@ function damageBird(b,dmg,src,quiet){if(b.dead||b.gone)return;const sp=b.sp;
  if(b.armor>0){b.armorT=0;const a=b.armor;b.armor=Math.max(0,a-dmg);dmg=Math.max(0,dmg-a);if(!quiet&&dmg<=0){b.flash=.1;shPop(b,'🧊','#e1f5fe');if(b.armor<=0){pop(b.x,b.y-40,'ARMOR SHATTERED!','#81d4fa',20);sfx('boom');}return;}}
  if(b.frozen>0)dmg*=1.5;
  if(b.key==='quetzal'&&!quiet){earn(Math.round(50*(1+S.knife*.4)),b.x,b.y-22,'#ff80ab');}
- b.hp-=dmg;if(!quiet){b.hits++;b.flash=.1;feathers(b.x,b.y,b.sp,b.key==='condor'?6:3);}b.src=src;
+ b.hp-=dmg;if(!quiet&&b.maxhp>=4&&dmg>=.5)pop(b.x+rand(-10,10),b.y-b.s-4,String(Math.round(dmg*10)/10),dmg>=10?'#ffd54f':'#ffffff',dmg>=10?16:12,.7);if(!quiet){b.hits++;b.flash=.1;feathers(b.x,b.y,b.sp,b.key==='condor'?6:3);}b.src=src;
  if(src==='blast')b.blasted=true;if(src==='gas')b.gassed=true;
  if(b.key==='goose'&&!quiet){earn(Math.round(20*(1+S.knife)),b.x,b.y-20,'#ffd54f');sfx('coin');}
  if(b.hp<=0){
@@ -617,14 +633,39 @@ function stuffItem(id,silent){const i=S.bag.findIndex(x=>x.id===id);if(i<0)retur
  if(!S.stuffed[it.key]){S.stuffed[it.key]=true;const bonus=Math.round(SP[it.key].meat*3);earn(bonus);toast('📖 New species stuffed: '+SP[it.key].n+'! +$'+fmt(bonus)+' and +5% trophy income','gold',3500);sfx('shiny');}
  else if(!silent)sfx('buy');bagDirty();return true;}
 function sellTrophy(id){const i=S.shelf.findIndex(x=>x.id===id);if(i<0)return;const it=S.shelf[i];S.shelf.splice(i,1);earn(trophyPrice(it));sfx('coin');bagDirty();}
-function sellAll(keepNew){let tot=0;for(const it of S.bag.slice()){if(keepNew&&(it.shiny||!S.stuffed[it.key]||(it.cond==='pristine'&&RAR[SP[it.key].r].k>=2)))continue;tot+=sellItem(it.id,true);}if(tot>0){sfx('coin');toast('Sold meat for $'+fmt(tot),'green');}}
+function sellAll(keepNew){let tot=0;for(const it of S.bag.slice()){if(keepNew&&(it.shiny||it.botd||!S.stuffed[it.key]||(it.cond==='pristine'&&RAR[SP[it.key].r].k>=2)))continue;tot+=sellItem(it.id,true);}if(tot>0){sfx('coin');toast('Sold meat for $'+fmt(tot),'green');}}
 function runWorkers(){
  if(S.intern){for(const it of S.bag.slice()){const val=stuffBase(it);
    if(S.shelf.length<shelfCap()){if(!S.stuffed[it.key]||it.shiny||it.cond==='pristine'||S.shelf.length<shelfCap()-1)stuffItem(it.id,true);}
    else{let low=null;for(const t of S.shelf)if(!low||stuffBase(t)<stuffBase(low))low=t;if(low&&val>stuffBase(low)*1.2&&S.money+trophyPrice(low)>=stuffFee(it)){sellTrophy(low.id);stuffItem(it.id,true);}}}}
- if(S.butcher){let tot=0;for(const it of S.bag.slice()){if(it.shiny||(!S.stuffed[it.key]&&!S.intern))continue;if(S.intern&&S.shelf.length<shelfCap()&&S.money>=stuffFee(it))continue;tot+=sellItem(it.id,true);}if(tot>0){pop(W/2,GY-110,'🔪 Butcher sold $'+fmt(tot),'#ffe066',14);}}}
+ if(S.butcher){let tot=0;for(const it of S.bag.slice()){if(it.shiny||it.botd||(!S.stuffed[it.key]&&!S.intern))continue;if(S.intern&&S.shelf.length<shelfCap()&&S.money>=stuffFee(it))continue;tot+=sellItem(it.id,true);}if(tot>0){pop(W/2,GY-110,'🔪 Butcher sold $'+fmt(tot),'#ffe066',14);}}}
 
 /* ================= shop ================= */
+
+/* ---- achievements ---- */
+const mythDown=()=>MYTHICS.reduce((t,k)=>t+(S.book[k]||0),0);
+const ACHS=[
+ ['first','🪨','First Throw','Down your first bird',()=>S.kills>=1,25],
+ ['k100','🐦','Bird Brain','Down 100 birds',()=>S.kills>=100,500],
+ ['k1000','🪶','Feather Storm','Down 1,000 birds',()=>S.kills>=1000,10000],
+ ['k10000','🌪️','Sky Sweeper','Down 10,000 birds',()=>S.kills>=10000,250000],
+ ['c5','🔥','Hot Streak','Hit a ×5 combo',()=>S.bestCombo>=5,200],
+ ['c15','💥','Combo King','Hit a ×15 combo',()=>S.bestCombo>=15,3000],
+ ['c30','⚡','Unstoppable','Hit a ×30 combo',()=>S.bestCombo>=30,25000],
+ ['t10','🗄️','Collector','Have 10 trophies on your shelf',()=>S.shelf.length>=10,1000],
+ ['shiny','✨','Shiny Hunter','Stuff a shiny bird',()=>S.shelf.some(i=>i.shiny),2000],
+ ['myth','🌟','Myth Buster','Down a Mythic bird',()=>mythDown()>=1,10000],
+ ['myth10','🌌','Legend Hunter','Down 10 Mythic birds',()=>mythDown()>=10,150000],
+ ['boss1','👑','Boss Slayer','Defeat a boss',()=>S.bossKills>=1,5000],
+ ['bossall','🏆','Boss Rush','Defeat all 11 different bosses',()=>BOSSES.every(k=>S.bossBeat[k]),1000000],
+ ['loc1','✈️','Tourist','Unlock a new place',()=>Object.keys(S.unlocked).length>=2,5000],
+ ['locall','🌍','Globetrotter','Unlock every place',()=>LORDER.every(k=>S.unlocked[k]),5000000],
+ ['botd','📅','Daily Hunter','Catch a Bird of the Day',()=>!!S.botdLast,2000],
+ ['botd3','📆','Habit Forming','Get a 3-day Bird of the Day streak',()=>S.botdStreak>=3,25000],
+ ['m1','💰','Millionaire','Earn $1M in total',()=>S.earned>=1e6,50000],
+ ['m1b','🏦','Billionaire','Earn $1B in total',()=>S.earned>=1e9,10000000],
+ ['book','📖','Completionist','Stuff every bird and boss in the Bird Book',()=>speciesCount()>=ALLBOOK.length,50000000]];
+function checkAch(){if(!S.ach)S.ach={};for(const [id,ic,n,d,f,rew] of ACHS){if(!S.ach[id]&&f()){S.ach[id]=1;S.money+=rew;S.earned+=rew;toast('🏅 Achievement: '+ic+' '+n+'! +$'+fmt(rew),'gold',4000);sfx('buy');}}}
 function lvlItem(id,cat,n,lv,max,cost,desc,buy){max=Infinity;return {id,cat,n,lv,max,cost:lv>=max?Infinity:cost,desc,buy,maxed:lv>=max};}
 function shopItems(){const L=[];
  for(const k of WORDER){if(k==='rock')continue;const w=WEAP[k];const wl=weaponLoc(k);const here=wl===S.loc;L.push({id:'w_'+k,cat:'Weapons',n:w.ic+' '+w.n,desc:w.desc+(here?'':' <b>Sold in '+LOCS[wl].ic+' '+LOCS[wl].n+'.</b>'),cost:S.weapons[k]?Infinity:w.cost,owned:S.weapons[k],lock:(!S.weapons[k]&&!here)?'🗺️ '+LOCS[wl].n:'',sort:S.weapons[k]?2:here?0:3,buy(){S.weapons[k]=true;S.equipped=k;renderHotbar();toast('Equipped '+w.n+'! Switch with the number keys or mouse wheel.','green');}});}
@@ -670,19 +711,21 @@ function renderPanel(){if(!panelOpen)return;document.querySelectorAll('.tab').fo
    <div class="wl"><b>Weapon shop:</b> ${L.weapons.map(w=>WEAP[w].ic+' '+WEAP[w].n+(S.weapons[w]?' ✅':'')).join(' · ')}</div>
    ${here?'<button class="buy owned" disabled>📍 You are here</button>':un?`<button class="buy" data-travel="${k}">✈️ Travel here</button>`:`<button class="buy" data-unlock="${k}" ${S.money>=L.cost?'':'disabled'}>🔓 Unlock for $${fmt(L.cost)}</button>`}</div>`;}}
  else if(tab==='bag'){const full=S.shelf.length>=shelfCap();
-  h+=`<div class="sum">Bag <b>${S.bag.length}/${bagCap()}</b> · Shelf ${S.shelf.length}/${shelfCap()}<br>Knife: ${knife(S.knife).n} (×${knife(S.knife).m} meat)</div>`;
+  h+=`<div class="sum">Bag <b>${S.bag.length}/${bagCap()}</b> · Shelf ${S.shelf.length}/${shelfCap()}<br>Knife: ${knife(S.knife).n} (×${knife(S.knife).m} meat)<br>Meat value in bag: <b style="font-size:14px">$${fmt(S.bag.reduce((t,i)=>t+meatVal(i),0))}</b></div>`;
   if(S.bag.length){h+=`<div class="row"><button class="buy alt" data-sellall="0">Sell all meat</button><button class="buy alt" data-sellall="1">Sell dupes only</button></div>`;}
   else h+='<div class="empty">Your bag is empty.<br>Go throw some rocks! 🪨</div>';
-  for(const it of S.bag.slice().reverse()){const sp=SP[it.key],fee=stuffFee(it);
+  for(const it of S.bag.slice().sort((a,b)=>meatVal(b)-meatVal(a))){const sp=SP[it.key],fee=stuffFee(it);
    h+=`<div class="card"><img src="${birdIcon(it.key,it.shiny)}" alt=""><div class="info"><h4>${it.shiny?'✨ ':''}${sp.n}<span class="tag" style="background:${COND[it.cond].c}">${COND[it.cond].n}</span>${!S.stuffed[it.key]?'<span class="tag" style="background:#1e6fd9">NEW</span>':''}${it.botd?'<span class="tag" style="background:#e6a100">🌟 BOTD</span>':''}</h4><p><span style="color:${RAR[sp.r].c};font-weight:800">${sp.r}</span> · Meat $${fmt(meatVal(it))} · Trophy +$${fmtR(stuffVal(it))}/s</p></div>
    <div class="btns2"><button class="buy alt" data-sell="${it.id}">Sell $${fmt(meatVal(it))}</button><button class="buy" data-stuff="${it.id}" ${full||S.money<fee?'disabled':''}>${full?'Shelf full':'Stuff $'+fmt(fee)}</button></div></div>`;}}
  else{const inc=income();const bookCell=k=>{const sp=SP[k],seen=S.book[k]||0,st=S.stuffed[k];const beat=S.bossBeat[k]||0;return `<div class="cell"><img src="${birdIcon(k,false,!seen)}" alt=""><div class="nm">${seen?sp.n:'???'}</div><div style="color:${RAR[sp.r].c}">${sp.r}${sp.when==='night'?' 🌙':sp.when==='day'?' ☀️':''}</div><div>${sp.r==='Boss'?'Beaten: '+beat:'Downed: '+seen}</div>${seen&&sp.desc?`<div style="font-weight:400;opacity:.75;font-size:10px;line-height:1.25;margin:2px 0">${sp.desc}</div>`:''}<div>${st?'✅ Stuffed':'⬜ Not stuffed'}</div></div>`;};h+=`<div class="sum">Trophy income: <b>$${fmtR(inc)}/s</b><br>${S.shelf.length}/${shelfCap()} on the shelf · Stuffing: ${stuffT(S.stuffing).n} (×${stuffT(S.stuffing).m})<br>Bird Book bonus: <b style="font-size:13px">+${Math.round((setBonus()-1)*100)}%</b> (${speciesCount()}/${ALLBOOK.length} species${speciesCount()>=ALLBOOK.length?' · COMPLETE ×2!':', complete it for ×2'})</div>`;
+  const ad=ACHS.filter(a=>S.ach&&S.ach[a[0]]).length;
   h+='<h3>🗄️ Trophy Shelf</h3>';
   if(!S.shelf.length)h+='<div class="empty">No trophies yet. Stuff birds from your bag to earn money while you play.</div>';
   else{h+='<div class="grid">';for(const it of S.shelf.slice().sort((a,b)=>stuffBase(b)-stuffBase(a)))h+=`<div class="cell ${it.shiny?'shiny':''}"><img src="${birdIcon(it.key,it.shiny)}" alt=""><div class="nm">${it.shiny?'✨':''}${SP[it.key].n}</div><div style="color:${COND[it.cond].c}">${COND[it.cond].n}</div><div>+$${fmtR(stuffVal(it))}/s</div><button class="sell" data-selltro="${it.id}">Sell $${fmt(trophyPrice(it))}</button></div>`;h+='</div>';}
   for(const l of LORDER){const ks=ORDER.filter(k=>homeOf(k)===l);h+='<h3>'+LOCS[l].ic+' '+LOCS[l].n+(S.unlocked[l]?'':' <span style="font-size:12px;opacity:.6">🔒 locked</span>')+'</h3><div class="grid">'+ks.map(bookCell).join('')+'</div>';}
   h+='<h3>🌟 Mythic Birds <span style="font-size:12px;opacity:.6">(super rare)</span></h3><div class="grid">'+MYTHICS.map(bookCell).join('')+'</div>';
-  h+='<h3>👑 Bosses <span style="font-size:12px;opacity:.6">(next: '+SP[nextBossKey()].n+')</span></h3><div class="grid">'+BOSSES.map(bookCell).join('')+'</div>';}
+  h+='<h3>👑 Bosses <span style="font-size:12px;opacity:.6">(next: '+SP[nextBossKey()].n+')</span></h3><div class="grid">'+BOSSES.map(bookCell).join('')+'</div>';
+  h+='<h3>🏅 Achievements <span style="font-size:12px;opacity:.6">('+ad+'/'+ACHS.length+')</span></h3>'+ACHS.map(([id,ic,n,d,f,rew])=>`<div class="ach ${S.ach&&S.ach[id]?'':'off'}"><span class="ai">${S.ach&&S.ach[id]?ic:'🔒'}</span><div style="flex:1"><b>${n}</b><br>${d}</div><div style="font-weight:800">${S.ach&&S.ach[id]?'✅':'$'+fmt(rew)}</div></div>`).join('');}
  if(h!==lastHTML){const sc=$('pbody').scrollTop;$('pbody').innerHTML=h;$('pbody').scrollTop=sc;lastHTML=h;}}
 let resetArm=false;
 $('pbody').addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;const d=t.dataset;
@@ -703,27 +746,28 @@ $('close').onclick=closePanel;
 $('mute').onclick=()=>{S.muted=!S.muted;$('mute').textContent=S.muted?'🔇':'🔊';};
 
 /* ================= hotbar ================= */
-function renderHotbar(){let h='';WORDER.filter(k=>S.weapons[k]).forEach((k,i)=>{const w=WEAP[k];h+=`<button class="hb ${S.equipped===k?'sel':''}" data-w="${k}"><span class="k">${i<10?(i+1)%10:""}</span><span class="ic">${w.ic}</span><span class="lb">${w.n.split(' ').pop()}</span><span class="cdv"></span></button>`;});
+function renderHotbar(){let h='';WORDER.filter(k=>S.weapons[k]).forEach((k,i)=>{const w=WEAP[k];h+=`<button class="hb ${S.equipped===k?'sel':''}" data-w="${k}" title="${w.n}: ${w.desc.replace(/"/g,'')}"><span class="k">${i<10?(i+1)%10:""}</span><span class="ic">${w.ic}</span><span class="lb">${w.n.split(' ').pop()}</span><span class="cdv"></span></button>`;});
  h+=`<button class="hb gas" data-gas="1"><span class="k">Q</span><span class="ic">☁️</span><span class="lb">Birdicide ×${S.gas}</span></button>`;$('hotbar').innerHTML=h;}
 $('hotbar').addEventListener('pointerdown',e=>{e.stopPropagation();});
 $('hotbar').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;initAudio();if(b.dataset.w){S.equipped=b.dataset.w;renderHotbar();}else if(b.dataset.gas)throwGas();});
 
 /* ================= input ================= */
 function setAim(e){aim.x=e.clientX;aim.y=e.clientY;}
-cv.addEventListener('pointerdown',e=>{if(!started)return;initAudio();setAim(e);firing=true;try{cv.setPointerCapture(e.pointerId);}catch(er){}fire();});
+cv.addEventListener('pointerdown',e=>{if(!started||paused)return;initAudio();setAim(e);firing=true;try{cv.setPointerCapture(e.pointerId);}catch(er){}fire();});
 cv.addEventListener('pointermove',setAim);
 addEventListener('pointerup',()=>firing=false);addEventListener('pointercancel',()=>firing=false);
-addEventListener('keydown',e=>{if(!started)return;const k=e.key.toLowerCase();
+addEventListener('keydown',e=>{if(!started)return;const k=e.key.toLowerCase();if(paused&&k==='escape'){setPause(false);return;}if(paused&&k!=='p')return;
  if(k>='0'&&k<='9'){const own=WORDER.filter(w=>S.weapons[w]);const w=own[k==='0'?9:+k-1];if(w){S.equipped=w;renderHotbar();}}
  else if(k==='q')throwGas();
  else if(k==='s'||k==='b'||k==='c'||k==='t'){const t={s:'shop',b:'bag',c:'book',t:'map'}[k];if(panelOpen&&tab===t)closePanel();else openPanel(t);}
  else if(k==='escape')closePanel();
  else if(k==='m')$('mute').click();
+ else if(k==='p')setPause(!paused);
  else if(k===' '){firing=true;e.preventDefault();}});
 addEventListener('wheel',e=>{if(!started||e.target.closest('#panel'))return;const own=WORDER.filter(w=>S.weapons[w]);let i=own.indexOf(S.equipped);i=(i+(e.deltaY>0?1:-1)+own.length)%own.length;S.equipped=own[i];renderHotbar();},{passive:true});
 addEventListener('keyup',e=>{if(e.key===' ')firing=false;});
 addEventListener('resize',resize);
-document.addEventListener('visibilitychange',()=>{if(document.hidden)save();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){save();if(started)setPause(true);}});
 addEventListener('beforeunload',save);
 
 /* ================= render ================= */
@@ -767,6 +811,7 @@ function draw(){const p=(S.clock%DAY)/DAY;const [top,bot,nf]=skyAt(p);
  for(const q of parts){if(q.t==='gas'||q.t==='smoke'){const a=q.life/q.max;ctx.globalAlpha=a*(q.t==='gas'?.35:.5);ctx.fillStyle=q.t==='gas'?'#8bc34a':'#555';circ(ctx,q.x,q.y,q.s*(1.6-a*.6));}}ctx.globalAlpha=1;
  // birds
  const botdKey=botd().key;
+ ctx.fillStyle='rgba(0,0,0,.12)';for(const b of birds){if(b.dead||b.state==='ground'||b.phased)continue;const hgt=clamp((GY-b.y)/GY,0,1);ctx.globalAlpha=1-hgt*.85;ell(ctx,b.x,GY+4,b.s*(1.2-hgt*.6),b.s*.22);}ctx.globalAlpha=1;
  for(const b of birds){const rate=b.pat==='boss'?4:b.key==='hummer'?45:b.pat==='flutter'?20:b.pat==='glide'?7:b.pat==='dive'&&b.state==='dive'?0:11;
   let flap=b.dead?.3:rate?Math.sin(b.t*rate):-.6;if(b.pat==='glide'&&!b.dead&&Math.sin(b.t*.9)>.3)flap=-.15;
   if(b.pat==='charge'&&!b.dead)flap=-.5;if(b.pat==='swarm')flap=Math.sin(b.t*18);
@@ -807,7 +852,7 @@ function draw(){const p=(S.clock%DAY)/DAY;const [top,bot,nf]=skyAt(p);
   else if(q.t==='ring'){ctx.globalAlpha=a;ctx.strokeStyle='#fff3c4';ctx.lineWidth=6*a;ctx.beginPath();ctx.arc(q.x,q.y,q.s*(1.1-a*.7),0,6.28);ctx.stroke();}}
  ctx.globalAlpha=1;
  // popups
- ctx.textAlign='center';for(const p2 of pops){ctx.globalAlpha=clamp(p2.life,0,1);ctx.font=`900 ${p2.size}px Trebuchet MS, sans-serif`;ctx.lineWidth=4;ctx.strokeStyle='rgba(0,0,0,.6)';ctx.strokeText(p2.text,p2.x,p2.y);ctx.fillStyle=p2.color;ctx.fillText(p2.text,p2.x,p2.y);}ctx.globalAlpha=1;
+ ctx.textAlign='center';for(const p2 of pops){ctx.globalAlpha=clamp(p2.life,0,1);ctx.font=`${p2.size}px 'Lilita One', 'Trebuchet MS', sans-serif`;ctx.lineWidth=4;ctx.strokeStyle='rgba(0,0,0,.6)';ctx.strokeText(p2.text,p2.x,p2.y);ctx.fillStyle=p2.color;ctx.fillText(p2.text,p2.x,p2.y);}ctx.globalAlpha=1;
  // night tint
  if(nf>0){ctx.fillStyle=`rgba(10,15,45,${nf*.25})`;ctx.fillRect(-20,-20,W+40,H+40);}
  if(travelFade>0){ctx.fillStyle=`rgba(0,0,0,${travelFade})`;ctx.fillRect(-20,-20,W+40,H+40);travelFade=Math.max(0,travelFade-.03);}
@@ -875,24 +920,29 @@ function drawPlayer(nf){const x=player.x,y=GY;const sy=y-50;const a=Math.atan2(a
  if(player.chill>0){ctx.fillStyle='rgba(150,210,255,.3)';ell(ctx,x,y-40,22,42);ctx.font='16px sans-serif';ctx.textAlign='center';ctx.fillText('❄️',x+22,y-90);}}
 
 /* ================= HUD ================= */
-let lastBotd='',lastMoney='',lastInc='',lastBag='',lastClock='';
+let hudT=0,lastBotd='',lastMoney='',lastInc='',lastBag='',lastClock='';
 function hud(){const m='$'+fmt(S.money);if(m!==lastMoney){$('money').textContent=m;lastMoney=m;}
  const i='+$'+fmtR(income())+'/s from trophies';if(i!==lastInc){$('income').textContent=i;lastInc=i;}
  const bg=S.bag.length+'/'+bagCap();if(bg!==lastBag){$('bagCount').textContent=bg;$('bagBtn').classList.toggle('full',S.bag.length>=bagCap());lastBag=bg;}
- const bt=Math.max(0,Math.ceil(bossT));const cl=(isNight()?'🌙 Night ':'☀️ Day ')+(Math.floor(S.clock/DAY)+1)+(boss?'':' · 👑 '+SP[nextBossKey()].n+' in '+Math.floor(bt/60)+':'+String(bt%60).padStart(2,'0'));if(cl!==lastClock){$('clock').textContent=cl;lastClock=cl;}
+ const bt=Math.max(0,Math.ceil(bossT));const cl=(isNight()?'🌙 Night ':'☀️ Day ')+(Math.floor(S.clock/DAY)+1)+(boss?'':' · 👑 '+(W<640?'':SP[nextBossKey()].n+' in ')+Math.floor(bt/60)+':'+String(bt%60).padStart(2,'0'));if(cl!==lastClock){$('clock').textContent=cl;lastClock=cl;}
  const bd=botd(),bdk=bd.key+(botdCaught()?'1':'0')+S.botdStreak;if(bdk!==lastBotd){lastBotd=bdk;const done=botdCaught();$('botd').className='box'+(done?' done':'');$('botd').innerHTML=`<img src="${birdIcon(bd.key)}" alt=""><div>🌟 Bird of the Day: ${SP[bd.key].n}<br><span style="font-weight:600;opacity:.8">${LOCS[bd.loc].ic} ${LOCS[bd.loc].n} · ${done?'✅ Jackpot claimed! Still worth ×3'+(S.botdStreak>1?' · 🔥'+S.botdStreak:''):'Catch one for a jackpot!'}</span></div>`;}
+ if(hudT++%30===0){$('toast').style.bottom=($('hotbar').offsetHeight+18)+'px';}
  $('combo').textContent=(combo>=2&&now-lastKill<1.6)?'COMBO ×'+combo:'';
  if(boss){$('bossbar').style.display='block';$('bossfill').style.width=(clamp(boss.hp/boss.maxhp,0,1)*100)+'%';const nm='👑 '+boss.sp.n.toUpperCase()+((S.bossBeat[boss.key]||0)?' Lv '+((S.bossBeat[boss.key]||0)+1):'');if($('bossname').textContent!==nm)$('bossname').textContent=nm;const sb=boss.sub||'';if($('bosssub').textContent!==sb)$('bosssub').textContent=sb;}else $('bossbar').style.display='none';
  const sel=document.querySelector('.hb.sel .cdv');if(sel){const w=WEAP[S.equipped];sel.style.height=(clamp(cd/Math.max(.04,w.cd*armMult()),0,1)*100)+'%';}}
 
 /* ================= loop ================= */
-let last=performance.now(),panelT=0;
-function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;if(started)update(dt);else{now+=dt;for(const c of clouds){c.x+=c.v*dt;if(c.x>W+150)c.x=-150;}if(Math.random()<dt*1.2)spawnRandom();for(const b of birds){b.t+=dt;b.x+=b.dir*b.spd*dt*.7;b.y=b.baseY+Math.sin(b.t*2)*20;if(b.x<-130||b.x>W+130)b.gone=true;}birds=birds.filter(b=>!b.gone);}
+let last=performance.now(),panelT=0,paused=false,achT=0;
+function setPause(v){if(!started)return;paused=v;$('pause').style.display=v?'flex':'none';firing=false;if(v)save();}
+$('pause').onclick=()=>setPause(false);$('pauseBtn').onclick=()=>setPause(!paused);
+$('help').onclick=()=>{setPause(false);$('start').style.display='flex';$('go').textContent='Back to the game';started=false;firing=false;};
+function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;if(started&&!paused){update(dt);achT+=dt;if(achT>1){achT=0;checkAch();}}else if(started||!firstGo){}else{now+=dt;for(const c of clouds){c.x+=c.v*dt;if(c.x>W+150)c.x=-150;}if(Math.random()<dt*1.2)spawnRandom();for(const b of birds){b.t+=dt;b.x+=b.dir*b.spd*dt*.7;b.y=b.baseY+Math.sin(b.t*2)*20;if(b.x<-130||b.x>W+130)b.gone=true;}birds=birds.filter(b=>!b.gone);}
  draw();hud();panelT+=dt;if(panelT>.3){panelT=0;renderPanel();}requestAnimationFrame(loop);}
 
+let firstGo=true;
 const had=load();if(!LOCS[S.loc])S.loc='meadow';applyTheme();resize();renderHotbar();$('mute').textContent=S.muted?'🔇':'🔊';
 if(had){$('go').textContent='Continue';}
-$('go').onclick=()=>{initAudio();$('start').style.display='none';started=true;birds=birds.filter(b=>false);spawnT=.5;
+$('go').onclick=()=>{initAudio();$('start').style.display='none';started=true;if(!firstGo)return;firstGo=false;birds=birds.filter(b=>false);spawnT=.5;
  const el=(Date.now()-(S.lastSave||Date.now()))/1000,inc=income();if(had&&el>30&&inc>0){const gain=inc*Math.min(el,7200)*.5;S.money+=gain;S.earned+=gain;toast('🦜 Your trophies earned $'+fmt(gain)+' while you were away!','gold',4500);}
  else if(!had)toast('Click or hold anywhere to throw rocks!','green',3500);save();};
 requestAnimationFrame(loop);
