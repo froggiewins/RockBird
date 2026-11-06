@@ -328,6 +328,7 @@ function resize(){DPR=Math.min(2,window.devicePixelRatio||1);W=innerWidth;H=inne
  if(!clouds.length){for(let i=0;i<7;i++)clouds.push({x:rand(0,W),y:rand(30,H*.4),s:rand(.6,1.4),v:rand(8,22)});}
  if(!stars.length){for(let i=0;i<90;i++)stars.push({x:Math.random(),y:Math.random()*.7,s:rand(.5,1.8),p:rand(0,6)});}
  if(!aim.x){aim.x=W/2+100;aim.y=H/2;}}
+const MAXT=8;
 function turretX(i,n){const side=i%2,idx=Math.floor(i/2),per=Math.ceil(n/2);const a=W*.12,b=W/2-70;const f=(idx+.5)/per;return side?W-(a+(b-a)*f):a+(b-a)*f;}
 function placeTurrets(){const old=turrets;turrets=[];for(let i=0;i<S.turrets;i++)turrets.push({x:turretX(i,S.turrets),cd:rand(0,1),a:-Math.PI/2,off:0,...(old[i]?{a:old[i].a}:{})});}
 
@@ -678,7 +679,7 @@ function shopItems(){const L=[];
  const ns=stuffT(S.stuffing+1);L.push(ns?{id:'stuff',cat:'Taxidermy',n:'🧵 '+ns.n,lv:S.stuffing,max:Infinity,cost:ns.c,desc:'Higher quality stuffing. All trophies earn ×'+ns.m+' (now ×'+stuffT(S.stuffing).m+').',buy(){S.stuffing++;}}:{id:'stuff',cat:'Taxidermy',n:'🧵 '+stuffT(S.stuffing).n,maxed:true,cost:Infinity,desc:'The finest stuffing ever made. ×'+stuffT(S.stuffing).m+'.'});
  L.push(lvlItem('shelf','Taxidermy','🗄️ Trophy Shelf',S.shelfLv,12,Math.round(250*Math.pow(1.9,S.shelfLv)),'+3 trophy slots (now '+shelfCap()+').',()=>S.shelfLv++));
  L.push({id:'intern',cat:'Taxidermy',n:'🧑‍🔬 Taxidermy Intern',cost:S.intern?Infinity:5000,owned:S.intern,desc:'Stuffs good birds from your bag for you, and swaps out your weakest trophy when a better bird comes along.',buy(){S.intern=true;}});
- L.push(lvlItem('turret','Turrets','🔫 Auto Turret',S.turrets,6,Math.round(3000*Math.pow(2.2,S.turrets)),'Places another auto turret that shoots birds by itself ('+S.turrets+' built).',()=>{S.turrets++;placeTurrets();}));
+ {const it=lvlItem('turret','Turrets','🔫 Auto Turret',S.turrets,MAXT,Math.round(3000*Math.pow(2.2,S.turrets)),'Places another auto turret that shoots birds by itself ('+S.turrets+'/'+MAXT+' built).',()=>{if(S.turrets<MAXT){S.turrets++;placeTurrets();}});it.max=MAXT;if(S.turrets>=MAXT){it.maxed=true;it.cost=Infinity;}L.push(it);}
  L.push(lvlItem('tup','Turrets','⚙️ Turret Overclock',S.turretLv,8,Math.round(2000*Math.pow(2.3,S.turretLv)),'Turrets fire faster (+15%) and hit harder (+0.5 damage).',()=>S.turretLv++));
  L.push({id:'gas1',cat:'Birdicide',n:'☁️ Birdicide Canister',cost:Math.round(100*(1+.5*S.gasLv)),desc:'Throw with Q (or the green button). Makes a toxic cloud that kills birds. Meat comes out Toxic. You have '+S.gas+'.',buy(){S.gas++;renderHotbar();}});
  L.push({id:'gas5',cat:'Birdicide',n:'☁️ Birdicide 5-Pack',cost:Math.round(450*(1+.5*S.gasLv)),desc:'Five canisters for a little less.',buy(){S.gas+=5;renderHotbar();}});
@@ -700,7 +701,7 @@ function renderPanel(){if(!panelOpen)return;document.querySelectorAll('.tab').fo
  if(tab==='shop'){h+='<div class="sub">'+CATS.map(c=>`<button data-sub="${c}" class="${c===subTab?'on':''}">${c}</button>`).join('')+'</div>';
   for(const it of shopItems().filter(i=>i.cat===subTab).map((x,i)=>(x.si=i,x)).sort((a,b)=>((a.sort||1)-(b.sort||1))||a.si-b.si)){const can=S.money>=it.cost;let btn;
    if(it.lock)btn=`<button class="buy owned" disabled>${it.lock}</button>`;else if(it.owned)btn='<button class="buy owned" disabled>Owned</button>';else if(it.maxed)btn='<button class="buy owned" disabled>MAX</button>';else btn=`<button class="buy" data-buy="${it.id}" ${can?'':'disabled'}>$${fmt(it.cost)}</button>`;
-   h+=`<div class="card"><div class="info"><h4>${it.n}${it.lv!==undefined&&it.max?`<span class="lv">Lv ${it.lv}</span>`:''}</h4><p>${it.desc}</p></div>${btn}</div>`;}
+   h+=`<div class="card"><div class="info"><h4>${it.n}${it.lv!==undefined&&it.max?`<span class="lv">${it.max===Infinity?'Lv '+it.lv:it.lv+'/'+it.max}</span>`:''}</h4><p>${it.desc}</p></div>${btn}</div>`;}
   if(subTab==='Weapons')h+=`<p style="font-size:12px;opacity:.65">Tip: one-hit Rock, Axe, Scattergun and Boomerang kills come out <b>Pristine</b> (1.5× trophy value).</p>`;
   h+=`<h3>Stats</h3><div class="sum">Birds downed: <b>${fmt(S.kills)}</b><br>Total earned: $${fmt(S.earned)}<br>Best combo: ×${S.bestCombo} · Condors slain: ${S.bossKills}</div><button class="buy danger" data-reset="1" style="width:100%">${resetArm?'Click again to WIPE your save':'Reset progress'}</button>`;}
  else if(tab==='map'){const bd=botd();
@@ -940,7 +941,7 @@ function loop(t){const dt=Math.min(.05,(t-last)/1000);last=t;if(started&&!paused
  draw();hud();panelT+=dt;if(panelT>.3){panelT=0;renderPanel();}requestAnimationFrame(loop);}
 
 let firstGo=true;
-const had=load();if(!LOCS[S.loc])S.loc='meadow';applyTheme();resize();renderHotbar();$('mute').textContent=S.muted?'🔇':'🔊';
+const had=load();if(S.turrets>MAXT)S.turrets=MAXT;if(!LOCS[S.loc])S.loc='meadow';applyTheme();resize();renderHotbar();$('mute').textContent=S.muted?'🔇':'🔊';
 if(had){$('go').textContent='Continue';}
 $('go').onclick=()=>{initAudio();$('start').style.display='none';started=true;if(!firstGo)return;firstGo=false;birds=birds.filter(b=>false);spawnT=.5;
  const el=(Date.now()-(S.lastSave||Date.now()))/1000,inc=income();if(had&&el>30&&inc>0){const gain=inc*Math.min(el,7200)*.5;S.money+=gain;S.earned+=gain;toast('🦜 Your trophies earned $'+fmt(gain)+' while you were away!','gold',4500);}
