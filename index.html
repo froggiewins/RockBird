@@ -572,10 +572,10 @@ function update(dt){now+=dt;S.clock+=dt;
   }}
  birds=birds.filter(b=>!b.gone);
  // turrets
- const tdmg=1+.5*S.turretLv,trate=Math.max(.08,1.1*Math.pow(.85,S.turretLv));
+ const tdmg=.6+.3*S.turretLv,trate=Math.max(.18,1.8*Math.pow(.9,S.turretLv));
  for(const t of turrets){t.cd-=dt;if(t.off>0){t.off-=dt;if(Math.random()<.2)parts.push({t:'smoke',x:t.x,y:GY-36,vx:rand(-10,10),vy:-40,life:.8,max:.8,s:6});continue;}let best=null,bd=1e9;for(const b of birds){if(b.dead||b.phased||b.decoy)continue;const d=Math.hypot(b.x-t.x,b.y-GY)-(b===boss?300:0);if(d<bd&&b.y<GY-40&&b.x>-20&&b.x<W+20){bd=d;best=b;}}
-  if(best){const tt=Math.hypot(best.x-t.x,best.y-(GY-34))/1100;const vx=best.pat==='boss'||best.pat.match(/flutter|glide|wave|zigzag/)?best.dir*best.spd:0;const tx=best.x+vx*tt,ty=best.y;const a=Math.atan2(ty-(GY-34),tx-t.x);t.a+=(a-t.a)*Math.min(1,dt*12);
-   if(t.cd<=0){t.cd=trate;projs.push({k:'bullet',x:t.x+Math.cos(t.a)*20,y:GY-34+Math.sin(t.a)*20,vx:Math.cos(t.a)*1100,vy:Math.sin(t.a)*1100,r:3,g:0,dmg:tdmg,pierce:1,hit:new Set(),life:0,rot:0,src:'turret'});t.kick=.1;}}
+  if(best){const tt=Math.hypot(best.x-t.x,best.y-(GY-34))/750;const vx=best.pat==='boss'||best.pat.match(/flutter|glide|wave|zigzag/)?best.dir*best.spd:0;const tx=best.x+vx*tt,ty=best.y;const a=Math.atan2(ty-(GY-34),tx-t.x);t.a+=(a-t.a)*Math.min(1,dt*5);
+   if(t.cd<=0){t.cd=trate;projs.push({k:'bullet',x:t.x+Math.cos(t.a)*20,y:GY-34+Math.sin(t.a)*20,vx:Math.cos(t.a)*750,vy:Math.sin(t.a)*750,r:3,g:0,dmg:tdmg,pierce:1,hit:new Set(),life:0,rot:0,src:'turret'});t.kick=.1;}}
   if(t.kick>0)t.kick-=dt;}
  // projectiles
  for(const p of projs){p.life+=dt;
@@ -680,7 +680,7 @@ function shopItems(){const L=[];
  L.push(lvlItem('shelf','Taxidermy','🗄️ Trophy Shelf',S.shelfLv,12,Math.round(250*Math.pow(1.9,S.shelfLv)),'+3 trophy slots (now '+shelfCap()+').',()=>S.shelfLv++));
  L.push({id:'intern',cat:'Taxidermy',n:'🧑‍🔬 Taxidermy Intern',cost:S.intern?Infinity:5000,owned:S.intern,desc:'Stuffs good birds from your bag for you, and swaps out your weakest trophy when a better bird comes along.',buy(){S.intern=true;}});
  {const it=lvlItem('turret','Turrets','🔫 Auto Turret',S.turrets,MAXT,Math.round(3000*Math.pow(2.2,S.turrets)),'Places another auto turret that shoots birds by itself ('+S.turrets+'/'+MAXT+' built).',()=>{if(S.turrets<MAXT){S.turrets++;placeTurrets();}});it.max=MAXT;if(S.turrets>=MAXT){it.maxed=true;it.cost=Infinity;}L.push(it);}
- L.push(lvlItem('tup','Turrets','⚙️ Turret Overclock',S.turretLv,8,Math.round(2000*Math.pow(2.3,S.turretLv)),'Turrets fire faster (+15%) and hit harder (+0.5 damage).',()=>S.turretLv++));
+ L.push(lvlItem('tup','Turrets','⚙️ Turret Overclock',S.turretLv,8,Math.round(2000*Math.pow(2.3,S.turretLv)),'Turrets fire 10% faster and hit a little harder (+0.3 damage).',()=>S.turretLv++));
  L.push({id:'gas1',cat:'Birdicide',n:'☁️ Birdicide Canister',cost:Math.round(100*(1+.5*S.gasLv)),desc:'Throw with Q (or the green button). Makes a toxic cloud that kills birds. Meat comes out Toxic. You have '+S.gas+'.',buy(){S.gas++;renderHotbar();}});
  L.push({id:'gas5',cat:'Birdicide',n:'☁️ Birdicide 5-Pack',cost:Math.round(450*(1+.5*S.gasLv)),desc:'Five canisters for a little less.',buy(){S.gas+=5;renderHotbar();}});
  L.push(lvlItem('gasLv','Birdicide','☠️ Potency Formula',S.gasLv,5,Math.round(500*Math.pow(2.2,S.gasLv)),'Bigger clouds that do more damage.',()=>S.gasLv++));
