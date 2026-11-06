@@ -223,6 +223,17 @@ const SP={
  magmaeagle:{n:'Magma Eagle',r:'Uncommon',size:24,hp:10,spd:[110,140],meat:620,stuff:31,pat:'glide',when:'any',body:'#3e2723',belly:'#ff3d00',wing:'#bf360c',head:'#4e342e',beak:'#ffab00',glow:'#ff3d00'},
  cinderheron:{n:'Cinder Heron',r:'Rare',size:21,hp:12,spd:[100,130],meat:1300,stuff:65,pat:'glide',when:'any',body:'#37474f',belly:'#ff7043',wing:'#263238',head:'#455a64',beak:'#ffab00',neck:true},
  obsidian:{n:'Obsidian Condor',r:'Epic',size:30,hp:20,spd:[80,100],meat:6500,stuff:325,pat:'glide',when:'any',body:'#0d0d0d',belly:'#311b92',wing:'#000000',head:'#4a148c',beak:'#b388ff',collar:'#7c4dff',glow:'#7c4dff'},
+ /* ---- SECRET ---- */
+ pixelpigeon:{n:'Pixel Pigeon',r:'Secret',size:16,hp:6,spd:[140,170],meat:8000,stuff:400,pat:'glitch',when:'any',body:'#7e57c2',belly:'#b39ddb',wing:'#00e5ff',head:'#7e57c2',beak:'#ffeb3b',pixel:true,desc:'A glitch in the matrix. It jumps around in 8-bit steps.'},
+ rubberduck:{n:'Rubber Ducky',r:'Secret',size:15,hp:4,spd:[120,150],meat:6000,stuff:300,pat:'wave',when:'any',body:'#ffd600',belly:'#ffeb3b',wing:'#fbc02d',head:'#ffd600',beak:'#ff6f00',squeak:true,desc:'Squeaks and bounces away every time you hit it.'},
+ siren:{n:'Sunset Siren',r:'Secret',size:20,hp:25,spd:[90,110],meat:15000,stuff:750,pat:'glide',when:'any',body:'#ff8a65',belly:'#ffe0b2',wing:'#ce93d8',head:'#ffab91',beak:'#fff59d',glow:'#ff80ab',plumes:'#ce93d8',notes:true,desc:'Sings over the sea while the sun goes down.'},
+ dodo:{n:'Lost Dodo',r:'Secret',size:21,hp:40,spd:[70,90],meat:25000,stuff:1250,pat:'wobble',when:'any',body:'#90a4ae',belly:'#cfd8dc',wing:'#78909c',head:'#b0bec5',beak:'#c8b06a',bigBeak:true,desc:'Supposed to be extinct. Still hasn\'t figured out how to fly.'},
+ disco:{n:'Disco Pigeon',r:'Secret',size:16,hp:60,spd:[110,140],meat:60000,stuff:3000,pat:'zigzag',when:'any',body:'#e0e0e0',belly:'#fafafa',wing:'#bdbdbd',head:'#eeeeee',beak:'#ff4081',glow:'#ffffff',disco:true,desc:'The life of every Neon City party.'},
+ mirage:{n:'Mirage Bird',r:'Secret',size:19,hp:90,spd:[90,120],meat:150000,stuff:7500,pat:'glide',when:'any',body:'#ffcc80',belly:'#fff3e0',wing:'#ffb74d',head:'#ffe0b2',beak:'#ff7043',glow:'#fff3e0',mirage:true,desc:'Shimmers in the heat and brings fake copies of itself.'},
+ penguin:{n:'Flying Penguin',r:'Secret',size:18,hp:150,spd:[130,160],meat:400000,stuff:20000,pat:'wave',when:'any',body:'#212121',belly:'#ffffff',wing:'#111111',head:'#212121',beak:'#ff9800',desc:'Penguins can\'t fly. Nobody told this one.'},
+ goldhen:{n:'Molten Gold Hen',r:'Secret',size:20,hp:250,spd:[80,100],meat:900000,stuff:45000,pat:'glide',when:'any',body:'#ffb300',belly:'#ffe082',wing:'#ff6f00',head:'#ffca28',beak:'#d84315',glow:'#ffd740',collar:'#e53935',goldEggs:true,desc:'Drops molten gold coins while it flies.'},
+ canary:{n:'Crown Canary',r:'Secret',size:10,hp:20,spd:[280,340],meat:50000,stuff:2500,pat:'zigzag',when:'any',body:'#ffeb3b',belly:'#fff59d',wing:'#fbc02d',head:'#ffeb3b',beak:'#ff9800',crown:true,glow:'#fff176',desc:'A royal pet that only flies when a boss is around.'},
+ goldrock:{n:'The Golden Rock',r:'Secret',size:16,hp:30,spd:[110,130],meat:250000,stuff:12500,pat:'wave',when:'any',body:'#ffc107',belly:'#ffe082',wing:'#fff8e1',head:'#ffc107',beak:'#ffc107',rockbird:true,rockOnly:true,desc:'A rock that learned to fly. Only rocks can hurt it.'},
  /* ---- MYTHIC ---- */
  diamond:{n:'Diamond Dove',r:'Mythic',size:15,hp:12,spd:[140,170],meat:1500,stuff:75,w:.12,pat:'zigzag',when:'any',body:'#b3e5fc',belly:'#e1f5fe',wing:'#81d4fa',head:'#b3e5fc',beak:'#ffffff',glow:'#e1f5fe',armor1:true,crystal:true,desc:'Every hit does only 1 damage, but each one chips off a gem worth cash.'},
  thunder:{n:'Thunderbird',r:'Mythic',size:22,hp:7,spd:[160,200],meat:2400,stuff:120,w:.12,pat:'blink',when:'any',body:'#283593',belly:'#5c6bc0',wing:'#ffeb3b',head:'#303f9f',beak:'#ffeb3b',glow:'#fff176',electric:true,desc:'Teleports around in flashes of lightning.'},
@@ -270,8 +281,25 @@ const ORDER=[];for(const l of LORDER)for(const [k] of LOCS[l].pool)if(!ORDER.inc
 function homeOf(k){for(const l of LORDER)if(LOCS[l].pool.some(e=>e[0]===k))return l;return null;}
 const MYTHICS=['diamond','thunder','ghost','quetzal','frostowl','cosmic','clock','swan','peacock','magpie'];
 const BOSSES=['condor','albatross','matriarch','pelican','ironeagle','phantom','monarch','phoenixq','roc','corvus','cassowary'];
-const ALLBOOK=[...ORDER,...MYTHICS,...BOSSES];
-const RAR={Common:{c:'#8d8d8d',k:0},Uncommon:{c:'#3f8f3a',k:1},Rare:{c:'#1e6fd9',k:2},Epic:{c:'#9c27b0',k:3},Legendary:{c:'#e65100',k:4},Mythic:{c:'#00a5b8',k:4},Boss:{c:'#b71c1c',k:5}};
+const SECRETS=['pixelpigeon','rubberduck','siren','dodo','disco','mirage','penguin','goldhen','canary','goldrock'];
+const dayPhase=()=>(S.clock%DAY)/DAY;
+const SECRET_INFO={
+ pixelpigeon:{loc:'meadow',rate:1/500,hint:'Something glitchy roosts in the Meadow, but only at night.',cond:()=>isNight()},
+ rubberduck:{loc:'meadow',rate:1/30,hint:'Hit a ×8 combo in the Meadow and something squeaky might come and see.',cond:()=>combo>=8&&now-lastKill<1.6},
+ siren:{loc:'beach',rate:1/120,hint:'Sings over the Shores, but only at sunset or sunrise.',cond:()=>{const p=dayPhase();return (p>.6&&p<.72)||p>.94;}},
+ dodo:{loc:'jungle',rate:1/500,hint:'A lost, extinct bird wanders the Jungle in daylight.',cond:()=>!isNight()},
+ disco:{loc:'city',rate:1/400,hint:'The party starts in Neon City after dark.',cond:()=>isNight()},
+ mirage:{loc:'desert',rate:1/300,hint:'Only in the burning heat of the desert at midday… or is it really there?',cond:()=>{const p=dayPhase();return p>.18&&p<.45;}},
+ penguin:{loc:'tundra',rate:1/600,hint:'Somewhere in the Tundra, a bird is doing something it shouldn\'t be able to do.',cond:()=>true},
+ goldhen:{loc:'volcano',rate:1/600,hint:'Something precious bubbles up from Mount Inferno.',cond:()=>true},
+ canary:{loc:null,rate:1/200,hint:'Only flies while royalty (a boss) is around. Any place.',cond:()=>!!boss},
+ goldrock:{loc:null,rate:1/400,hint:'Only true rock throwers will see it: hold the Rock and have 1,000+ birds downed. Any place.',cond:()=>S.equipped==='rock'&&S.kills>=1000}
+};
+let secretT=0;
+function trySecrets(){if(!started)return;if(birds.some(b=>b.sp.r==='Secret'&&!b.dead&&!b.decoy))return;
+ for(const k of SECRETS){const I=SECRET_INFO[k];if(I.loc&&I.loc!==S.loc)continue;if(!I.cond())continue;if(Math.random()<I.rate*(1+.25*S.mythLv)){spawnBird(k);return;}}}
+const ALLBOOK=[...ORDER,...SECRETS,...MYTHICS,...BOSSES];
+const RAR={Common:{c:'#8d8d8d',k:0},Uncommon:{c:'#3f8f3a',k:1},Rare:{c:'#1e6fd9',k:2},Epic:{c:'#9c27b0',k:3},Legendary:{c:'#e65100',k:4},Mythic:{c:'#00a5b8',k:4},Secret:{c:'#c2185b',k:4},Boss:{c:'#b71c1c',k:5}};
 const COND={pristine:{n:'Pristine',meat:1.2,stuff:1.5,c:'#3a8f3a'},normal:{n:'Normal',meat:1,stuff:1,c:'#8d8d8d'},blasted:{n:'Blasted',meat:.7,stuff:.35,c:'#e0582f'},toxic:{n:'Toxic',meat:.3,stuff:1,c:'#6f9a2a'}};
 const WEAP={
  rock:{n:'Rock',ic:'🪨',cost:0,cd:.42,spd:950,dmg:1,g:900,r:5,src:'rock',desc:'Trusty rock. One-hit kills are Pristine.'},
@@ -354,7 +382,16 @@ function sfx(n){if(!AC||S.muted)return;const t=performance.now();if(lastS[n]&&t-
 
 /* ================= drawing birds ================= */
 function drawBird(c,sp,x,y,s,dir,o){
- o=o||{};const f=o.flap||0;
+ o=o||{};
+ if(sp.pixel){c.save();c.translate(Math.round(x/3)*3,Math.round(y/3)*3);c.scale(dir,1);if(o.rot)c.rotate(o.rot*dir);const u=Math.max(2,Math.round(s/4));const P=(px,py,w,h,col)=>{c.fillStyle=col;c.fillRect(px*u,py*u,w*u,h*u);};
+  P(-7,-1,3,2,'#5e35b1');P(-4,-2,7,5,sp.body);P(-3,1,5,2,sp.belly);P(2,-5,4,4,sp.head);P(6,-4,2,1,sp.beak);P(4,-4,1,1,o.dead?'#ff1744':'#000');P(-1,3,1,2,'#ffab40');P(1,3,1,2,'#ffab40');
+  const up=(o.flap||0)>0;P(-2,up?-4:0,4,2,sp.wing);if(up)P(-1,-5,2,1,sp.wing);if(o.flash){c.globalAlpha=.6;P(-4,-5,10,8,'#fff');c.globalAlpha=1;}c.restore();return;}
+ if(sp.rockbird){c.save();c.translate(x,y);c.scale(dir,1);if(o.rot)c.rotate(o.rot*dir);c.shadowColor='#ffd740';c.shadowBlur=s*1.3;const f=o.flap||0;
+  c.fillStyle='#fffde7';c.beginPath();c.moveTo(-s*.1,-s*.35);c.quadraticCurveTo(-s*.7,-s*.6-s*1.1*f,-s*1.3,-s*.45-s*.9*f);c.quadraticCurveTo(-s*.7,-s*.1,-s*.1,-s*.35);c.fill();
+  c.fillStyle=o.flash?'#fff':'#ffc107';c.beginPath();c.moveTo(-s*.9,-s*.4);c.lineTo(-s*.2,-s*.85);c.lineTo(s*.8,-s*.6);c.lineTo(s*1,s*.3);c.lineTo(s*.2,s*.8);c.lineTo(-s*.85,s*.55);c.closePath();c.fill();c.shadowBlur=0;
+  c.fillStyle='#ffe57f';circ(c,-s*.15,-s*.3,s*.28);c.fillStyle='#ff8f00';circ(c,s*.3,s*.35,s*.12);
+  if(o.dead){c.strokeStyle='#3e2723';c.lineWidth=2;c.beginPath();c.moveTo(s*.4,-s*.4);c.lineTo(s*.7,-s*.1);c.moveTo(s*.7,-s*.4);c.lineTo(s*.4,-s*.1);c.stroke();}else{c.fillStyle='#fff';circ(c,s*.55,-s*.25,s*.18);c.fillStyle='#000';circ(c,s*.6,-s*.25,s*.09);}
+  c.restore();return;}const f=o.flap||0;
  c.save();c.translate(x,y);c.scale(dir,1);if(o.rot)c.rotate(o.rot*dir);
  if(sp.glow||o.shiny){c.shadowColor=o.shiny?'#fff176':sp.glow;c.shadowBlur=s*1.4;}
  // back wing
@@ -368,6 +405,7 @@ function drawBird(c,sp,x,y,s,dir,o){
  c.fillStyle=sp.body;ell(c,0,0,s*1.05,s*.72);
  c.shadowBlur=0;
  if(sp.mech){c.strokeStyle='rgba(0,0,0,.35)';c.lineWidth=Math.max(1,s*.06);c.beginPath();c.moveTo(-s*.6,-s*.5);c.lineTo(-s*.6,s*.55);c.moveTo(s*.2,-s*.65);c.lineTo(s*.2,s*.65);c.stroke();c.fillStyle='rgba(255,255,255,.5)';for(const [rx,ry] of [[-.75,-.2],[-.75,.25],[.05,-.4],[.05,.4]])circ(c,rx*s,ry*s,s*.06);}
+ if(sp.disco){for(let i=0;i<9;i++){c.fillStyle='hsl('+((i*40+now*300)%360)+',90%,60%)';c.fillRect(-s*.7+(i%3)*s*.45,-s*.45+Math.floor(i/3)*s*.32,s*.38,s*.26);}}
  if(sp.stars){c.fillStyle='#fff';for(const [rx,ry] of [[-.5,-.2],[.1,-.4],[.3,.1],[-.2,.3],[-.75,.1]])circ(c,rx*s,ry*s,Math.max(.8,s*.05+Math.sin(now*4+rx*9)*s*.03));}
  if(sp.crystal){c.strokeStyle='rgba(255,255,255,.9)';c.lineWidth=Math.max(1,s*.05);c.beginPath();c.moveTo(-s*.8,0);c.lineTo(-s*.2,-s*.6);c.lineTo(s*.3,0);c.lineTo(-s*.2,s*.6);c.closePath();c.moveTo(-s*.2,-s*.6);c.lineTo(-s*.2,s*.6);c.stroke();}
  c.fillStyle=sp.belly;ell(c,s*.15,s*.28,s*.72,s*.4);
@@ -421,7 +459,8 @@ function botdJackpot(b){const today=dayKey();if(S.botdLast===today)return;S.botd
 const HPM={Uncommon:1.6,Rare:2.5,Epic:4,Legendary:4};const VALM={Uncommon:1.35,Rare:1.8,Epic:2.6,Legendary:2.6};
 function spawnBird(key,o){o=o||{};const sp=SP[key];const dir=o.dir||(Math.random()<.5?1:-1);const s=sp.size*rand(.92,1.1);
  const b={key,sp,dir,s,x:o.x!==undefined?o.x:(dir>0?-70:W+70),y:0,baseY:o.y!==undefined?o.y:rand(70,Math.max(130,GY-220)),hp:Math.ceil(sp.hp*(HPM[sp.r]||1)),maxhp:Math.ceil(sp.hp*(HPM[sp.r]||1)),spd:rand(sp.spd[0],sp.spd[1]),t:Math.random()*10,hits:0,dead:false,shiny:started&&sp.r!=='Boss'&&!sp.minion&&Math.random()<shinyChance(),loot:0,shield:!!sp.iceShield,shieldT:0,blinkT:rand(1.2,2),age:0,flash:0,vx:0,vy:0,rot:0,spin:0,state:'fly',src:'',blasted:false,gassed:false,passes:0,ground:0,pat:o.pat||sp.pat};
- b.y=b.baseY;if(started&&sp.r==='Mythic'&&!o.quiet){toast('🌟 MYTHIC: '+sp.n+'! '+sp.desc,'gold',4500);sfx('shiny');}if(b.shiny)setTimeout(()=>{if(!b.dead){toast('✨ A shiny '+sp.n+' appeared!','gold');sfx('shiny');}},50);birds.push(b);return b;}
+ b.y=b.baseY;if(started&&sp.r==='Secret'&&!o.quiet){toast('🔮 A SECRET BIRD has appeared'+(S.book[key]?': '+sp.n+'!':'… ???'),'red',5000);sfx('shiny');setTimeout(()=>sfx('shiny'),180);if(sp.pat==='wobble')b.baseY=rand(Math.max(120,GY-320),GY-180);if(sp.mirage){for(let i=0;i<3;i++){const d=spawnBird(key,{dir:b.dir,x:b.x-b.dir*rand(60,200),y:clamp(b.baseY+rand(-120,120),70,GY-200),quiet:true});d.decoy=true;d.minion=true;d.hp=d.maxhp=1;d.life=30;d.shiny=false;d.spd=b.spd;}}}
+ if(started&&sp.r==='Mythic'&&!o.quiet){toast('🌟 MYTHIC: '+sp.n+'! '+sp.desc,'gold',4500);sfx('shiny');}if(b.shiny)setTimeout(()=>{if(!b.dead){toast('✨ A shiny '+sp.n+' appeared!','gold');sfx('shiny');}},50);birds.push(b);return b;}
 function spawnRandom(){const night=isNight();const pool=[];let tot=0;
  const bd=botd().key;for(const [k,bw] of LOCS[S.loc].pool.concat(MYTHICS.map(m=>[m,SP[m].w]))){const sp=SP[k];if(sp.when==='day'&&night)continue;if(sp.when==='night'&&!night)continue;
   let w=bw*(k===bd?3:1)*(RAR[sp.r].k>=2?(1+.6*S.exoticLv):1)*(sp.r==='Mythic'?1+.5*S.mythLv:1);if(night&&k==='owl')w*=1.5;pool.push([k,w]);tot+=w;}
@@ -456,9 +495,11 @@ function bossAbility(b,dt){const k=b.sp.boss;b.abT-=dt*1.4;const lv=S.bossKills;
 
 /* ================= combat ================= */
 function shPop(b,t,c){if(!b.shp||now-b.shp>.5){b.shp=now;pop(b.x,b.y-b.s-14,t,c||'#9be7ff',15);sfx('hit');}}
-function damageBird(b,dmg,src,quiet){if(b.dead||b.gone)return;const sp=b.sp;
+function damageBird(b,dmg,src,quiet,wk){if(b.dead||b.gone)return;const sp=b.sp;
  if(b.decoy){if(quiet)return;b.gone=true;for(let i=0;i<16;i++)parts.push({t:'smoke',x:b.x+rand(-b.s,b.s),y:b.y+rand(-b.s,b.s),vx:rand(-40,40),vy:rand(-40,10),life:.6,max:.6,s:rand(8,16)});pop(b.x,b.y,'DECOY!','#d1c4e9',16);sfx('hit');return;}
  if(b.phased)return;
+ if(sp.rockOnly&&wk!=='rock'){if(!quiet)shPop(b,'TINK! Only rocks work','#ffe082');return;}
+ if(sp.squeak&&!quiet){try{if(AC&&!S.muted){tone('sine',1400,2200,.08,.09);tone('sine',2000,1200,.1,.07,.07);}}catch(e){}b.baseY=Math.max(60,b.baseY-40);b.spd*=1.06;}
  if(b.bossShield){if(!quiet)shPop(b,'🛡 SHIELDED');return;}
  if(sp.mech&&src==='gas'){if(Math.random()<.02)shPop(b,'IMMUNE','#ccc');return;}
  if(b.key==='clock'&&src!=='blast')dmg*=.5;
@@ -481,7 +522,7 @@ function kill(b){
  if(b.loot>0){const pay=Math.round(b.loot*3);earn(pay,b.x,b.y-40,'#ffd54f');toast('🪙 Midas Magpie downed! Got $'+fmt(pay)+' back (×3)','gold');b.loot=0;}
  b.dead=true;b.vy=-140;if(b.key===botd().key){b.botd=true;botdJackpot(b);}b.vx=b.dir*b.spd*.25;b.spin=rand(-7,7);
  b.cond=b.blasted?'blasted':b.gassed?'toxic':(b.hits===1&&b.src==='rock')?'pristine':'normal';
- feathers(b.x,b.y,b.sp,b.key==='condor'?40:14);sfx('kill');S.kills++;S.book[b.key]=(S.book[b.key]||0)+1;
+ feathers(b.x,b.y,b.sp,b.key==='condor'?40:14);sfx('kill');S.kills++;if(b.sp.r==='Secret'&&!S.book[b.key]){const pay=Math.round(b.sp.meat*10);earn(pay,b.x,b.y-60,'#f48fb1');toast('🔮 SECRET DISCOVERED: '+b.sp.n+'! +$'+fmt(pay),'gold',6000);sfx('buy');shake=12;for(let i=0;i<60;i++)parts.push({t:'dot',x:b.x,y:b.y,vx:rand(-350,350),vy:rand(-350,250),life:1.2,max:1.2,s:rand(3,6),c:'hsl('+rand(280,360)+',90%,65%)'});}S.book[b.key]=(S.book[b.key]||0)+1;
  if(now-lastKill<1.6)combo++;else combo=1;lastKill=now;
  if(combo>S.bestCombo)S.bestCombo=combo;
  if(combo>=2){const bonus=(combo-1)*5*(1+S.knife*.5);earn(Math.round(bonus),b.x,b.y-26,'#ffb74d');$('combo').style.transform='scale(1.3)';setTimeout(()=>$('combo').style.transform='',100);}
@@ -512,6 +553,7 @@ function update(dt){now+=dt;S.clock+=dt;
  const inc=(boss&&boss.sp.boss==='vampire')?0:income();if(inc>0){S.money+=inc*dt;S.earned+=inc*dt;passiveT+=dt;if(passiveT>2){passiveT=0;pop(70,GY-120,'+$'+fmtR(inc*2),'#a5e887',15);}}
  if(S.loc==='tundra'&&Math.random()<.5)parts.push({t:'snow',x:rand(-20,W+20),y:-10,vx:rand(-20,10),vy:rand(40,80),life:6,max:6,s:rand(1,2.5)});
  if(S.loc==='volcano'&&Math.random()<.4)parts.push({t:'fire',x:rand(0,W),y:GY,vx:rand(-10,10),vy:rand(-80,-30),life:1.5,max:1.5,s:rand(1.5,3)});
+ secretT+=dt;if(secretT>=1){secretT=0;trySecrets();}
  // spawn
  spawnT-=dt;if(spawnT<=0){spawnT=rand(.75,1.5)*1.45/(1+.22*S.feederLv);const alive=birds.filter(b=>!b.dead&&!b.minion&&!b.isBoss).length;if(alive<Math.min(45,12+S.feederLv*2))spawnRandom();}
  if(!boss){bossT-=dt;if(bossT<6&&!bossWarn){bossWarn=true;toast('⚠️ Something huge is coming...','red');}if(bossT<=0){bossWarn=false;spawnBoss();}}
@@ -534,6 +576,9 @@ function update(dt){now+=dt;S.clock+=dt;
    if(sp.thief&&S.money>0){const st=Math.min(S.money,Math.min(400,Math.max(8,S.money*.012))*dt);S.money-=st;b.loot+=st;b.lootT=(b.lootT||0)+dt;if(b.lootT>1){b.lootT=0;pop(b.x,b.y-b.s-10,'🪙 stealing!','#ffd54f',13);}}
    if(b.decoy){b.life-=dt;if(b.life<=0){b.gone=true;continue;}}
    if(b===boss)bossAbility(b,dt);
+   if(sp.notes&&Math.random()<dt*2)pop(b.x+rand(-10,10),b.y-b.s-6,Math.random()<.5?'♪':'♫','#f8bbd0',18,1);
+   if(sp.disco&&Math.random()<.5)parts.push({t:'dot',x:b.x+rand(-b.s,b.s),y:b.y+rand(-b.s,b.s),vx:rand(-120,120),vy:rand(-120,120),life:.5,max:.5,s:2.5,c:'hsl('+((now*600+Math.random()*200)%360)+',95%,60%)'});
+   if(sp.goldEggs&&!b.decoy){b.eggT=(b.eggT||0)+dt;if(b.eggT>1.2){b.eggT=0;earn(Math.round(2000*(1+S.knife*.3)),b.x,b.y+b.s+10,'#ffd740');sfx('coin');for(let i=0;i<6;i++)parts.push({t:'fire',x:b.x,y:b.y+b.s,vx:rand(-40,40),vy:rand(20,120),life:.6,max:.6,s:rand(2,4)});}}
    if(b.frozen>0){b.frozen-=dt;}else switch(b.pat){
     case 'flutter':b.x+=b.dir*b.spd*dt;b.y=b.baseY+Math.sin(b.t*5)*12+Math.sin(b.t*1.3)*22;break;
     case 'glide':b.x+=b.dir*b.spd*dt;b.y=b.baseY+Math.sin(b.t*1.2)*16;break;
@@ -546,6 +591,8 @@ function update(dt){now+=dt;S.clock+=dt;
        else{const st=Math.min(Math.floor(S.money*.08),2000+S.bossKills*1000);if(st>0){S.money-=st;pop(b.x,b.y-30,'-$'+fmt(st)+' STOLEN!','#ff5252',20);sfx('steal');}b.state='flee';}}}
      else{b.x+=b.dir*b.spd*1.4*dt;b.y-=170*dt;}
      break;
+    case 'glitch':b.gT=(b.gT||0)-dt;if(b.gT<=0){b.gT=.22;b.x+=b.dir*b.spd*.22;b.y=Math.round((b.baseY+rand(-40,40))/8)*8;if(Math.random()<.25)parts.push({t:'dot',x:b.x,y:b.y,vx:0,vy:0,life:.25,max:.25,s:b.s*.8,c:'#00e5ff'});}break;
+    case 'wobble':b.x+=b.dir*b.spd*dt;b.y=b.baseY+Math.sin(b.t*1.6)*40+Math.pow(Math.max(0,Math.sin(b.t*.8)),6)*110;if(Math.random()<dt*.8)pop(b.x,b.y-b.s-8,'flap flap?','#fff',12,.8);break;
     case 'low':b.x+=b.dir*b.spd*dt;b.y=GY-50-Math.abs(Math.sin(b.t*4))*40;break;
     case 'blink':b.x+=b.dir*b.spd*dt;b.y=b.baseY+Math.sin(b.t*2.5)*30;b.blinkT-=dt;if(b.blinkT<=0&&b.age<22){b.blinkT=rand(1.4,2.4);parts.push({t:'bolt',x:b.x,y:-20,life:.2,max:.2,s:0,vx:0,vy:0,ty:b.y});b.x=rand(80,W-80);b.baseY=rand(70,Math.max(130,GY-220));b.dir=Math.random()<.5?1:-1;parts.push({t:'bolt',x:b.x,y:-20,life:.25,max:.25,s:0,vx:0,vy:0,ty:b.baseY});sfx('hit');}break;
     case 'swarm':if(b.leader&&!b.leader.dead&&!b.leader.gone){b.orb+=b.orS*dt;const tx=b.leader.x+Math.cos(b.orb)*b.orR,ty=b.leader.y+Math.sin(b.orb*1.3)*b.orR*.6;b.dir=tx>b.x?1:-1;const k2=Math.min(1,dt*3);b.x+=(tx-b.x)*k2;b.y+=(ty-b.y)*k2;}else{b.pat='flee';}break;
@@ -593,7 +640,7 @@ function update(dt){now+=dt;S.clock+=dt;
     if(b.mouth){p.dead=true;if(w&&w.blast){damageBird(b,p.dmg*2+w.bdmg*2*dmgMult(),'blast');explode(p.x,p.y,w.blast*.6,1);pop(b.x,b.y-b.s,'INDIGESTION! ×2','#ffab40',20);}else{pop(b.x,b.y-b.s,'GULP!','#fff',18);sfx('hit');}break;}
     if(b.fanned){p.vx=-p.vx*.8;p.vy=-Math.abs(p.vy)*.5-150;p.hit.add(b);shPop(b,'DEFLECTED!','#80cbc4');continue;}
     if(w&&w.blast&&!w.life){damageBird(b,p.dmg,'blast');explode(p.x,p.y,w.blast,w.bdmg,w.freezeBlast);p.dead=true;break;}
-    damageBird(b,p.dmg,p.src);if(w&&w.freeze&&!b.dead){b.frozen=w.freeze*(b.isBoss?.4:1);}p.hit.add(b);p.pierce--;if(p.pierce<=0){p.dead=true;break;}}}
+    damageBird(b,p.dmg,p.src,false,p.k);if(w&&w.freeze&&!b.dead){b.frozen=w.freeze*(b.isBoss?.4:1);}p.hit.add(b);p.pierce--;if(p.pierce<=0){p.dead=true;break;}}}
   if(p.dead)continue;
   for(const z of hazards){if(z.type==='warn'||z.dead)continue;if(Math.hypot(z.x-p.x,z.y-p.y)<16+p.r){z.dead=true;const v=z.type==='fireball'?15:z.type==='missile'?30:10;earn(Math.round(v*(1+S.knife*.5)),z.x,z.y-10,'#ffcc80');for(let i=0;i<10;i++)parts.push({t:z.type==='icicle'?'spark':'fire',x:z.x,y:z.y,vx:rand(-150,150),vy:rand(-150,150),life:.4,max:.4,s:rand(3,6)});sfx('hit');p.pierce--;if(p.pierce<=0){p.dead=true;break;}}}
   if(p.dead)continue;
@@ -665,6 +712,8 @@ const ACHS=[
  ['botd3','📆','Habit Forming','Get a 3-day Bird of the Day streak',()=>S.botdStreak>=3,25000],
  ['m1','💰','Millionaire','Earn $1M in total',()=>S.earned>=1e6,50000],
  ['m1b','🏦','Billionaire','Earn $1B in total',()=>S.earned>=1e9,10000000],
+ ['sec1','🔮','Secret Keeper','Discover a Secret bird',()=>SECRETS.some(k=>S.book[k]),100000],
+ ['secall','🕵️','Conspiracy Theorist','Discover all 10 Secret birds',()=>SECRETS.every(k=>S.book[k]),25000000],
  ['book','📖','Completionist','Stuff every bird and boss in the Bird Book',()=>speciesCount()>=ALLBOOK.length,50000000]];
 function checkAch(){if(!S.ach)S.ach={};for(const [id,ic,n,d,f,rew] of ACHS){if(!S.ach[id]&&f()){S.ach[id]=1;S.money+=rew;S.earned+=rew;toast('🏅 Achievement: '+ic+' '+n+'! +$'+fmt(rew),'gold',4000);sfx('buy');}}}
 function lvlItem(id,cat,n,lv,max,cost,desc,buy){max=Infinity;return {id,cat,n,lv,max,cost:lv>=max?Infinity:cost,desc,buy,maxed:lv>=max};}
@@ -705,10 +754,11 @@ function renderPanel(){if(!panelOpen)return;document.querySelectorAll('.tab').fo
   if(subTab==='Weapons')h+=`<p style="font-size:12px;opacity:.65">Tip: one-hit Rock, Axe, Scattergun and Boomerang kills come out <b>Pristine</b> (1.5× trophy value).</p>`;
   h+=`<h3>Stats</h3><div class="sum">Birds downed: <b>${fmt(S.kills)}</b><br>Total earned: $${fmt(S.earned)}<br>Best combo: ×${S.bestCombo} · Condors slain: ${S.bossKills}</div><button class="buy danger" data-reset="1" style="width:100%">${resetArm?'Click again to WIPE your save':'Reset progress'}</button>`;}
  else if(tab==='map'){const bd=botd();
-  h+=`<div class="sum">📍 You're in <b style="font-size:15px">${LOCS[S.loc].ic} ${LOCS[S.loc].n}</b><br>Every place has its own birds and its own weapon shop. Weapons you buy work everywhere. Bosses and Mythic birds can show up anywhere.</div>`;
-  for(const k of LORDER){const L=LOCS[k],un=S.unlocked[k],here=S.loc===k;const seenAll=L.pool.filter(([b])=>S.book[b]).length;
+  h+=`<div class="sum">📍 You're in <b style="font-size:15px">${LOCS[S.loc].ic} ${LOCS[S.loc].n}</b><br>Every place has its own birds and its own weapon shop. Weapons you buy work everywhere. Bosses and Mythic birds can show up anywhere, and so can 2 of the 🔮 Secret birds.</div>`;
+  for(const k of LORDER){const L=LOCS[k],un=S.unlocked[k],here=S.loc===k;const seenAll=L.pool.filter(([b])=>S.book[b]).length;const secs=SECRETS.filter(x=>SECRET_INFO[x].loc===k);
    h+=`<div class="loc ${here?'here':''}"><h4>${L.ic} ${L.n} ${bd.loc===k?'<span class="tag" style="background:#e6a100">🌟 Bird of the Day</span>':''}</h4><p>${L.desc}</p>
    <div style="font-size:11px;font-weight:800">Birds (${seenAll}/${L.pool.length} found)</div><div class="birds">${L.pool.map(([b])=>`<img title="${S.book[b]?SP[b].n:'???'}" src="${birdIcon(b,false,!S.book[b])}" alt="">`).join('')}</div>
+   <div style="font-size:11px;font-weight:800;color:#c2185b">🔮 Secrets found: ${secs.filter(x=>S.book[x]).length}/${secs.length}</div>
    <div class="wl"><b>Weapon shop:</b> ${L.weapons.map(w=>WEAP[w].ic+' '+WEAP[w].n+(S.weapons[w]?' ✅':'')).join(' · ')}</div>
    ${here?'<button class="buy owned" disabled>📍 You are here</button>':un?`<button class="buy" data-travel="${k}">✈️ Travel here</button>`:`<button class="buy" data-unlock="${k}" ${S.money>=L.cost?'':'disabled'}>🔓 Unlock for $${fmt(L.cost)}</button>`}</div>`;}}
  else if(tab==='bag'){const full=S.shelf.length>=shelfCap();
@@ -718,12 +768,13 @@ function renderPanel(){if(!panelOpen)return;document.querySelectorAll('.tab').fo
   for(const it of S.bag.slice().sort((a,b)=>meatVal(b)-meatVal(a))){const sp=SP[it.key],fee=stuffFee(it);
    h+=`<div class="card"><img src="${birdIcon(it.key,it.shiny)}" alt=""><div class="info"><h4>${it.shiny?'✨ ':''}${sp.n}<span class="tag" style="background:${COND[it.cond].c}">${COND[it.cond].n}</span>${!S.stuffed[it.key]?'<span class="tag" style="background:#1e6fd9">NEW</span>':''}${it.botd?'<span class="tag" style="background:#e6a100">🌟 BOTD</span>':''}</h4><p><span style="color:${RAR[sp.r].c};font-weight:800">${sp.r}</span> · Meat $${fmt(meatVal(it))} · Trophy +$${fmtR(stuffVal(it))}/s</p></div>
    <div class="btns2"><button class="buy alt" data-sell="${it.id}">Sell $${fmt(meatVal(it))}</button><button class="buy" data-stuff="${it.id}" ${full||S.money<fee?'disabled':''}>${full?'Shelf full':'Stuff $'+fmt(fee)}</button></div></div>`;}}
- else{const inc=income();const bookCell=k=>{const sp=SP[k],seen=S.book[k]||0,st=S.stuffed[k];const beat=S.bossBeat[k]||0;return `<div class="cell"><img src="${birdIcon(k,false,!seen)}" alt=""><div class="nm">${seen?sp.n:'???'}</div><div style="color:${RAR[sp.r].c}">${sp.r}${sp.when==='night'?' 🌙':sp.when==='day'?' ☀️':''}</div><div>${sp.r==='Boss'?'Beaten: '+beat:'Downed: '+seen}</div>${seen&&sp.desc?`<div style="font-weight:400;opacity:.75;font-size:10px;line-height:1.25;margin:2px 0">${sp.desc}</div>`:''}<div>${st?'✅ Stuffed':'⬜ Not stuffed'}</div></div>`;};h+=`<div class="sum">Trophy income: <b>$${fmtR(inc)}/s</b><br>${S.shelf.length}/${shelfCap()} on the shelf · Stuffing: ${stuffT(S.stuffing).n} (×${stuffT(S.stuffing).m})<br>Bird Book bonus: <b style="font-size:13px">+${Math.round((setBonus()-1)*100)}%</b> (${speciesCount()}/${ALLBOOK.length} species${speciesCount()>=ALLBOOK.length?' · COMPLETE ×2!':', complete it for ×2'})</div>`;
+ else{const inc=income();const bookCell=k=>{const sp=SP[k],seen=S.book[k]||0,st=S.stuffed[k];const beat=S.bossBeat[k]||0;return `<div class="cell"><img src="${birdIcon(k,false,!seen)}" alt=""><div class="nm">${seen?sp.n:'???'}</div><div style="color:${RAR[sp.r].c}">${sp.r}${sp.when==='night'?' 🌙':sp.when==='day'?' ☀️':''}</div><div>${sp.r==='Boss'?'Beaten: '+beat:'Downed: '+seen}</div>${!seen&&SECRET_INFO[k]?`<div style="font-weight:600;font-style:italic;color:#c2185b;font-size:10px;line-height:1.25;margin:2px 0">🔮 ${SECRET_INFO[k].hint}</div>`:''}${seen&&sp.desc?`<div style="font-weight:400;opacity:.75;font-size:10px;line-height:1.25;margin:2px 0">${sp.desc}</div>`:''}<div>${st?'✅ Stuffed':'⬜ Not stuffed'}</div></div>`;};h+=`<div class="sum">Trophy income: <b>$${fmtR(inc)}/s</b><br>${S.shelf.length}/${shelfCap()} on the shelf · Stuffing: ${stuffT(S.stuffing).n} (×${stuffT(S.stuffing).m})<br>Bird Book bonus: <b style="font-size:13px">+${Math.round((setBonus()-1)*100)}%</b> (${speciesCount()}/${ALLBOOK.length} species${speciesCount()>=ALLBOOK.length?' · COMPLETE ×2!':', complete it for ×2'})</div>`;
   const ad=ACHS.filter(a=>S.ach&&S.ach[a[0]]).length;
   h+='<h3>🗄️ Trophy Shelf</h3>';
   if(!S.shelf.length)h+='<div class="empty">No trophies yet. Stuff birds from your bag to earn money while you play.</div>';
   else{h+='<div class="grid">';for(const it of S.shelf.slice().sort((a,b)=>stuffBase(b)-stuffBase(a)))h+=`<div class="cell ${it.shiny?'shiny':''}"><img src="${birdIcon(it.key,it.shiny)}" alt=""><div class="nm">${it.shiny?'✨':''}${SP[it.key].n}</div><div style="color:${COND[it.cond].c}">${COND[it.cond].n}</div><div>+$${fmtR(stuffVal(it))}/s</div><button class="sell" data-selltro="${it.id}">Sell $${fmt(trophyPrice(it))}</button></div>`;h+='</div>';}
   for(const l of LORDER){const ks=ORDER.filter(k=>homeOf(k)===l);h+='<h3>'+LOCS[l].ic+' '+LOCS[l].n+(S.unlocked[l]?'':' <span style="font-size:12px;opacity:.6">🔒 locked</span>')+'</h3><div class="grid">'+ks.map(bookCell).join('')+'</div>';}
+  h+='<h3>🔮 Secret Birds <span style="font-size:12px;opacity:.6">('+SECRETS.filter(k=>S.book[k]).length+'/'+SECRETS.length+' found · first catch pays 10×)</span></h3><div class="grid">'+SECRETS.map(bookCell).join('')+'</div>';
   h+='<h3>🌟 Mythic Birds <span style="font-size:12px;opacity:.6">(super rare)</span></h3><div class="grid">'+MYTHICS.map(bookCell).join('')+'</div>';
   h+='<h3>👑 Bosses <span style="font-size:12px;opacity:.6">(next: '+SP[nextBossKey()].n+')</span></h3><div class="grid">'+BOSSES.map(bookCell).join('')+'</div>';
   h+='<h3>🏅 Achievements <span style="font-size:12px;opacity:.6">('+ad+'/'+ACHS.length+')</span></h3>'+ACHS.map(([id,ic,n,d,f,rew])=>`<div class="ach ${S.ach&&S.ach[id]?'':'off'}"><span class="ai">${S.ach&&S.ach[id]?ic:'🔒'}</span><div style="flex:1"><b>${n}</b><br>${d}</div><div style="font-weight:800">${S.ach&&S.ach[id]?'✅':'$'+fmt(rew)}</div></div>`).join('');}
@@ -818,6 +869,7 @@ function draw(){const p=(S.clock%DAY)/DAY;const [top,bot,nf]=skyAt(p);
   if(b.pat==='charge'&&!b.dead)flap=-.5;if(b.pat==='swarm')flap=Math.sin(b.t*18);
   if(b.state==='ground'){ctx.globalAlpha=b.ground<5?.4+.6*(b.ground%1):1;}
   if(b.sp.ghost&&!b.dead)ctx.globalAlpha=b.phased?.18:.8;
+  if(b.sp.mirage&&!b.dead)ctx.globalAlpha=.55+.3*Math.sin(now*6+b.x*.05);
   drawBird(ctx,b.sp,b.x,b.y,b.s,b.dir,{flap,dead:b.dead,rot:b.dead?b.rot:(b.state==='dive'?.6:0),flash:b.flash>0,shiny:b.shiny,run:b.run,mouth:b.mouth&&!b.dead,fanned:b.fanned&&!b.dead});ctx.globalAlpha=1;
   if(!b.dead&&(b.shield||b.bossShield)){ctx.strokeStyle=b.bossShield?'rgba(120,220,255,.85)':'rgba(200,235,255,.9)';ctx.lineWidth=3;ctx.beginPath();ctx.arc(b.x,b.y,b.s*1.55+Math.sin(now*6)*2,0,6.28);ctx.stroke();ctx.fillStyle='rgba(150,220,255,.15)';circ(ctx,b.x,b.y,b.s*1.55);}
   if(!b.dead&&b.frozen>0){ctx.fillStyle='rgba(170,225,255,.55)';ctx.strokeStyle='#e1f5fe';ctx.lineWidth=2;ctx.beginPath();ctx.rect(b.x-b.s*1.3,b.y-b.s*1.1,b.s*2.6,b.s*2.2);ctx.fill();ctx.stroke();}
